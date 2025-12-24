@@ -66,3 +66,4 @@ export const OutputPanel = ({ output, onClear }: OutputPanelProps) => {
   );
 };
 
+
