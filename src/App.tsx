@@ -3,7 +3,8 @@ import { ConfigPanel } from './components/ConfigPanel';
 import { EditorSection } from './components/EditorSection';
 import { EventsPanel, LogsPanel, OutputPanel } from './components/ActivityPanels';
 import { FeaturesSection } from './components/FeaturesSection';
-import './App.css';
+import { SearchWorkbenchSection } from "./components/SearchWorkbenchSection";
+import "./App.css";
 
 function App() {
   const { state, setters, handlers } = useEditorConfig();
@@ -84,6 +85,8 @@ function App() {
       <OutputPanel output={state.output} onClear={handlers.clearOutput} />
 
       <FeaturesSection />
+
+      <SearchWorkbenchSection />
     </div>
   );
 }
