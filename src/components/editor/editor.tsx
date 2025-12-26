@@ -24,6 +24,7 @@ type EditorProps = {
   wordWrap?: 'off' | 'on' | 'wordWrapColumn' | 'bounded';
   onChange?: OnChange;
   onDidPaste?: PasteEventHandler;
+  onMount?: (editor: editorNamespace.IStandaloneCodeEditor) => void;
   height?: CSSDimension;
   options?: editor.IStandaloneEditorConstructionOptions;
 };
@@ -41,6 +42,7 @@ export function Editor({
   wordWrap = 'on',
   onChange,
   onDidPaste,
+  onMount,
   height = '100px',
   options = {},
 }: EditorProps) {
@@ -56,6 +58,11 @@ export function Editor({
     editorRef.current = editor;
     if (onDidPaste) {
       editorRef.current.onDidPaste(onDidPaste);
+    }
+    
+    // Call external onMount callback if provided
+    if (onMount) {
+      onMount(editor);
     }
   };
 
