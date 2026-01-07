@@ -1,14 +1,13 @@
 import * as monaco from 'monaco-editor';
-import { AutocompleteVisitor } from './AutocompleteVisitor';
 import { ISearchQueryContext } from '../types/QueryContext';
-import { IndexService } from '../index/IndexService';
+import { SimpleAutocompleteProvider } from './SimpleAutocompleteProvider';
 
 export class AutoCompleteService {
-  private visitor: AutocompleteVisitor;
+  private provider: SimpleAutocompleteProvider;
   private queryContext: Map<string, ISearchQueryContext>;
 
-  constructor(indexService: IndexService) {
-    this.visitor = new AutocompleteVisitor(indexService);
+  constructor() {
+    this.provider = new SimpleAutocompleteProvider();
     this.queryContext = new Map();
   }
 
@@ -18,7 +17,7 @@ export class AutoCompleteService {
   ): Promise<monaco.languages.CompletionItem[]> {
     const context = this.queryContext.get(model.uri.toString());
 
-    const suggestions = await this.visitor.getAutoCompleteContributor(
+    const suggestions = await this.provider.provideCompletionItems(
       model,
       position,
       context,
