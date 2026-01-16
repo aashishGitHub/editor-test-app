@@ -48,4 +48,3 @@ export class EditorValidationService {
     monaco.editor.setModelMarkers(model, "search-query-validation", []);
   }
 }
-
