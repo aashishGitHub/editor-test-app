@@ -1,0 +1,2 @@
+export { SearchQueryHoverProvider } from './HoverProvider';
+
