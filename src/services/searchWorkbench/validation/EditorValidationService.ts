@@ -1,14 +1,24 @@
 import * as monaco from 'monaco-editor';
 import { ValidationService, ValidationResult } from './ValidationService';
+import { SearchWorkbenchConfigService } from '../config/SearchWorkbenchConfigService';
 
 /**
  * Service to manage Monaco editor markers for validation errors
  */
 export class EditorValidationService {
   private validationService: ValidationService;
+  private configService?: SearchWorkbenchConfigService;
 
-  constructor() {
-    this.validationService = new ValidationService();
+  constructor(configService?: SearchWorkbenchConfigService) {
+    this.configService = configService;
+    this.validationService = new ValidationService(configService);
+  }
+
+  /**
+   * Check if validation is enabled
+   */
+  isValidationEnabled(): boolean {
+    return this.configService?.isBasicValidationEnabled() ?? true;
   }
 
   /**
