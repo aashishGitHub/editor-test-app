@@ -71,18 +71,28 @@ export class ValidationService {
         column = parseInt(columnMatch[1], 10);
       }
 
+      // Get the line content to determine the end column for better highlighting
+      const queryLines = query.split("\n");
+      const errorLine = queryLines[lineNumber - 1] || "";
+      const endColumn = Math.max(column + 1, errorLine.length + 1);
+
+      // Create detailed error message with line and column info
+      const detailedMessage = `Invalid JSON: ${errorMessage}${
+        !lineMatch ? ` (line ${lineNumber}, column ${column})` : ""
+      }`;
+
       markers.push({
         severity: monaco.MarkerSeverity.Error,
-        message: `Invalid JSON: ${errorMessage}`,
+        message: detailedMessage,
         startLineNumber: lineNumber,
-        startColumn: Math.max(1, column - 1),
+        startColumn: 1, // Start from beginning of line for better visibility
         endLineNumber: lineNumber,
-        endColumn: column + 10,
+        endColumn: endColumn,
       });
 
       return {
         valid: false,
-        error: "Invalid JSON: " + errorMessage,
+        error: detailedMessage,
         markers,
       };
     }
