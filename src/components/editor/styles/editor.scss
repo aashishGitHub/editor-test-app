@@ -6,3 +6,30 @@ div.editor-wrapper > div.monaco-editor > div.overflow-guard {
   border-radius: 0.375rem;
 }
 
+/**
+ * Placeholder Overlay Styles
+ * These styles are applied to the placeholder widget when the editor is empty.
+ * The PlaceholderOverlayService applies inline styles by default, but these
+ * can be overridden using the .monaco-placeholder class.
+ */
+.monaco-placeholder {
+  color: #6b7280;
+  font-style: italic;
+  pointer-events: none;
+  white-space: pre-wrap;
+  opacity: 0.7;
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+  line-height: 1.6;
+  padding: 4px 0;
+}
+
+/* Dark theme placeholder adjustments */
+.vs-dark .monaco-placeholder {
+  color: #9ca3af;
+}
+
+/* Light theme placeholder adjustments */
+.vs-light .monaco-placeholder,
+.vs .monaco-placeholder {
+  color: #6b7280;
+}

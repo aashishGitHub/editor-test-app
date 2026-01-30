@@ -2,6 +2,9 @@ import { useState, useCallback } from 'react';
 import { SupportedLanguage, SupportedThemes } from '../components/editor/editor.types';
 import { editor as editorNamespace } from 'monaco-editor';
 import { SAMPLE_CODE } from '../constants/sampleCode';
+import { PLACEHOLDER_PRESETS } from '../components/editor/utils/placeholder-overlay';
+
+export type PlaceholderPreset = keyof typeof PLACEHOLDER_PRESETS | 'CUSTOM';
 
 export const useEditorConfig = () => {
   // Basic settings
@@ -14,6 +17,11 @@ export const useEditorConfig = () => {
   const [readOnly, setReadOnly] = useState(false);
   const [showRunButton, setShowRunButton] = useState(true);
   const [enableSchemaDoc, setEnableSchemaDoc] = useState(false);
+
+  // Placeholder settings
+  const [placeholderEnabled, setPlaceholderEnabled] = useState(false);
+  const [placeholderPreset, setPlaceholderPreset] = useState<PlaceholderPreset>('JSON_QUERY');
+  const [placeholderCustomText, setPlaceholderCustomText] = useState('// Enter your code here...');
 
   // Display settings
   const [wordWrap, setWordWrap] = useState<'off' | 'on' | 'wordWrapColumn' | 'bounded'>('on');
@@ -153,6 +161,10 @@ export const useEditorConfig = () => {
     setScrollbarSize(10);
     setOverviewRulerLanes(3);
     setEnableSchemaDoc(false);
+    // Reset placeholder settings
+    setPlaceholderEnabled(false);
+    setPlaceholderPreset('JSON_QUERY');
+    setPlaceholderCustomText('// Enter your code here...');
     addLog('Reset all settings to defaults');
   };
 
@@ -255,6 +267,10 @@ export const useEditorConfig = () => {
       scrollbarSize,
       overviewRulerLanes,
       enableSchemaDoc,
+      // Placeholder state
+      placeholderEnabled,
+      placeholderPreset,
+      placeholderCustomText,
       output,
       changeCount,
       pasteEvents,
@@ -304,6 +320,10 @@ export const useEditorConfig = () => {
       setScrollbarSize,
       setOverviewRulerLanes,
       setEnableSchemaDoc,
+      // Placeholder setters
+      setPlaceholderEnabled,
+      setPlaceholderPreset,
+      setPlaceholderCustomText,
     },
     // Handlers
     handlers: {

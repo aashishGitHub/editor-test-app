@@ -1,6 +1,8 @@
-import { Editor } from './editor/editor';
+import { Editor, PLACEHOLDER_PRESETS } from './editor/editor';
 import { SupportedLanguage, SupportedThemes } from './editor/editor.types';
 import { SAMPLE_SCHEMA_DOC } from '../constants/schemaDoc';
+import type { PlaceholderPreset } from '../hooks/useEditorConfig';
+import type { PlaceholderOverlayConfig } from './editor/utils/placeholder-overlay';
 
 interface EditorSectionProps {
   editorValue: string;
@@ -48,6 +50,10 @@ interface EditorSectionProps {
   showFoldingControls: 'always' | 'never' | 'mouseover';
   scrollbarSize: number;
   overviewRulerLanes: number;
+  // Placeholder settings
+  placeholderEnabled: boolean;
+  placeholderPreset: PlaceholderPreset;
+  placeholderCustomText: string;
   onRun?: () => void;
   onChange: (value: string | undefined) => void;
   onDidPaste: (e: any) => void;
@@ -100,10 +106,29 @@ export const EditorSection = (props: EditorSectionProps) => {
     showFoldingControls,
     scrollbarSize,
     overviewRulerLanes,
+    placeholderEnabled,
+    placeholderPreset,
+    placeholderCustomText,
     onRun,
     onChange,
     onDidPaste,
   } = props;
+
+  // Build placeholder config if enabled
+  const getPlaceholderConfig = (): PlaceholderOverlayConfig | undefined => {
+    if (!placeholderEnabled) {
+      return undefined;
+    }
+    
+    const text = placeholderPreset === 'CUSTOM' 
+      ? placeholderCustomText 
+      : PLACEHOLDER_PRESETS[placeholderPreset];
+    
+    return {
+      text,
+      enabled: true,
+    };
+  };
 
   return (
     <div className="editor-container">
@@ -130,6 +155,7 @@ export const EditorSection = (props: EditorSectionProps) => {
           onChange={onChange}
           onDidPaste={onDidPaste}
           height={`${editorHeight}px`}
+          placeholder={getPlaceholderConfig()}
           options={{
             cursorStyle,
             minimap: { enabled: minimap },
@@ -178,6 +204,7 @@ export const EditorSection = (props: EditorSectionProps) => {
     </div>
   );
 };
+
 
 
 

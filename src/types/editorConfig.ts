@@ -44,5 +44,5 @@ export type EditorConfig = {
   overviewRulerLanes: number;
 };
 
-export type ConfigSection = 'basic' | 'display' | 'editing' | 'suggestions' | 'advanced' | 'layout';
+export type ConfigSection = 'basic' | 'display' | 'editing' | 'suggestions' | 'advanced' | 'layout' | 'placeholder';
 

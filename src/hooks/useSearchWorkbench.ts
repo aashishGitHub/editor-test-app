@@ -55,17 +55,39 @@ export function useSearchWorkbench() {
     return workbenchService.getDefaultQueryTemplate();
   }, [workbenchService]);
 
-  const runQuery = useCallback(async (query: string, context: ISearchQueryContext) => {
-    setIsLoading(true);
-    try {
-      const response = await workbenchService.runSearchQuery(query, context);
-      setQueryResult(response.result);
-      setQueryStatus(response.status);
-      return response;
-    } finally {
-      setIsLoading(false);
-    }
+  const getQueryTemplates = useCallback(() => {
+    return workbenchService.getQueryTemplates();
   }, [workbenchService]);
+
+  const getTemplateCategories = useCallback(() => {
+    return workbenchService.getQueryTemplateCategories();
+  }, [workbenchService]);
+
+  const getTemplateAsString = useCallback(
+    (id: string) => {
+      return workbenchService.getQueryTemplateAsString(id);
+    },
+    [workbenchService]
+  );
+
+  const getGroupedTemplates = useCallback(() => {
+    return workbenchService.getGroupedQueryTemplates();
+  }, [workbenchService]);
+
+  const runQuery = useCallback(
+    async (query: string, context: ISearchQueryContext) => {
+      setIsLoading(true);
+      try {
+        const response = await workbenchService.runSearchQuery(query, context);
+        setQueryResult(response.result);
+        setQueryStatus(response.status);
+        return response;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [workbenchService]
+  );
 
   return {
     workbenchService,
@@ -77,6 +99,11 @@ export function useSearchWorkbench() {
     getDefaultQuery,
     registerEditor,
     runQuery,
+    // Template methods
+    getQueryTemplates,
+    getTemplateCategories,
+    getTemplateAsString,
+    getGroupedTemplates,
   };
 }
 

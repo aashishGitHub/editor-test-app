@@ -1,4 +1,4 @@
-import { SearchQueryResult, QueryStatusProps } from '../services/searchWorkbench/types/QueryContext';
+import { SearchQueryResult, QueryStatusProps } from '../../services/searchWorkbench/types/QueryContext';
 
 interface SearchResultsPanelProps {
   result: SearchQueryResult | null;

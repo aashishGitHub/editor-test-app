@@ -1,187 +1,110 @@
-# Monaco Editor Test App
+# Monaco Editor Test Application
 
-A comprehensive React + Vite application to test and demonstrate the Monaco Editor component with all its features.
+A professional React-based Monaco Editor playground with comprehensive configuration options and Search Workbench capabilities.
 
-## 🚀 Features
+## 🚀 Quick Start
 
-This test app showcases the following Monaco Editor features:
-
-- **Multiple Language Support**: JavaScript, TypeScript, Python, Java, JSON, N1QL, SQL++, Shell, and plain text
-- **Custom Languages**: N1QL and SQL++ with custom syntax highlighting
-- **Theme Switching**: Toggle between light and dark themes
-- **Configurable Options**:
-  - Font size adjustment (10-30px)
-  - Read-only mode
-  - Word wrap toggle
-  - Optional run button
-- **Syntax Highlighting**: Full syntax highlighting for all supported languages
-- **Monaco Editor Core**: Powered by the same editor that powers VS Code
-
-## 📦 Installation
-
-1. Navigate to the project directory:
 ```bash
-cd editor-test-app
-```
-
-2. Install dependencies:
-```bash
+# Install dependencies
 npm install
-```
 
-## 🏃 Running the App
-
-### Development Mode
-Start the development server:
-```bash
+# Start development server
 npm run dev
+
+# Open browser at http://localhost:5173
 ```
 
-The app will be available at `http://localhost:5173` (or another port if 5173 is busy)
+## 🎯 Key Features
 
-### Build for Production
-```bash
-npm run build
-```
+### Monaco Editor Playground
+- **55+ Configuration Options** organized in 6 sections (Storybook-style UI)
+- **9 Programming Languages** with syntax highlighting
+- **Custom Language Support** for N1QL and SQL++
+- **Theme Switching** (Light/Dark modes)
+- **Live Preview** with instant configuration updates
+- **Export/Import** configurations as JSON
 
-### Preview Production Build
-```bash
-npm run preview
-```
+### Search Workbench (Couchbase FTS)
+- **Intelligent JSON Editor** for search queries
+- **Hover Documentation** - 69 markdown help files
+- **Autocomplete** for query keywords
+- **Real-time Validation** with inline error markers
+- **Query Execution** with formatted results
+- **Configurable Features** via feature flags
 
-## 🎮 How to Use
-
-1. **Select a Language**: Click on any language button to switch the editor language
-2. **Change Theme**: Toggle between dark and light themes
-3. **Adjust Font Size**: Use the slider to change the editor font size
-4. **Toggle Options**: 
-   - Enable/disable read-only mode
-   - Show/hide the run button
-   - Toggle word wrap
-5. **Run Code**: Click the play button (if enabled) to execute the current code
-6. **Edit Code**: Type directly in the editor to modify the code
-
-## 📁 Project Structure
+## 📁 What's Included
 
 ```
 editor-test-app/
 ├── src/
 │   ├── components/
-│   │   ├── editor/
-│   │   │   ├── editor.tsx              # Main editor component
-│   │   │   ├── editor.types.ts         # TypeScript types
-│   │   │   ├── languages/
-│   │   │   │   ├── custom/
-│   │   │   │   │   ├── n1ql/          # N1QL language support
-│   │   │   │   │   ├── sql-plus-plus/  # SQL++ language support
-│   │   │   │   │   └── custom-java/    # Custom Java support
-│   │   │   │   └── types.ts
-│   │   │   ├── utils/
-│   │   │   │   ├── configure-monaco.ts # Monaco configuration
-│   │   │   │   ├── custom-languages.ts # Custom language utilities
-│   │   │   │   └── get-styles.ts       # Style utilities
-│   │   │   └── styles/
-│   │   │       └── editor.scss
-│   │   ├── icon/
-│   │   │   ├── icon.tsx                # Icon component
-│   │   │   └── icon.types.ts
-│   │   └── spinner/
-│   │       ├── spinner.tsx             # Spinner component
-│   │       ├── spinner.types.ts
-│   │       └── spinner.module.scss
-│   ├── styles/
-│   │   └── variables.scss
-│   ├── App.tsx                         # Main app component
-│   ├── App.css                         # App styles
-│   ├── main.tsx                        # Entry point
-│   └── index.css                       # Global styles
-├── index.html
-├── package.json
-├── tsconfig.json
-├── vite.config.ts
-└── README.md
+│   │   ├── editor/              # Reusable Monaco editor component
+│   │   ├── SearchWorkbench/     # Couchbase FTS query interface
+│   │   └── controls/            # Configuration controls
+│   ├── services/
+│   │   └── searchWorkbench/     # Search query services & docs
+│   ├── constants/               # Sample code & options
+│   └── App.tsx                  # Main application
+├── public/
+│   └── docs/search/             # 69 markdown documentation files
+└── Documentation (see below)
 ```
 
-## 🛠️ Technologies Used
+## 📚 Documentation
 
-- **React 18**: UI framework
-- **Vite**: Build tool and dev server
-- **TypeScript**: Type safety
-- **Monaco Editor**: Code editor component
-- **@monaco-editor/react**: React wrapper for Monaco
-- **Sass**: CSS preprocessing
+### For Demo & Quick Start
+- **DEMO_GUIDE.md** - Demo walkthrough (5 min)
+- **QUICKSTART.md** - Get running in 3 steps
 
-## 🔧 Configuration
+### For Technical Users
+- **STORYBOOK_GUIDE.md** - All 55 configuration options
+- **FEATURE_TESTING_GUIDE.md** - Feature testing scenarios
 
-The editor can be configured through the following props:
+### For Developers
+- **REFACTORING_GUIDE.md** - Code structure & patterns
+- **src/services/searchWorkbench/** - Search Workbench docs
 
-- `editorId`: Unique identifier for the editor
-- `language`: Programming language (see SupportedLanguage type)
-- `value`: Initial code value
-- `theme`: 'vs-dark' or 'vs-light'
-- `onRun`: Callback function for the run button
-- `readOnly`: Make the editor read-only
-- `fontSize`: Font size in pixels
-- `lineHeight`: Line height multiplier
-- `wordWrap`: Word wrap setting ('on' | 'off' | 'wordWrapColumn' | 'bounded')
-- `onChange`: Callback for content changes
-- `onDidPaste`: Callback for paste events
-- `height`: Editor height (CSS dimension)
+## 🎮 Demo Highlights
 
-## 📝 Example Usage
+### 1. Monaco Editor Playground
+- Switch languages instantly
+- Adjust 55+ options live
+- Export your perfect configuration
+- Professional Storybook-style UI
 
-```tsx
-import { Editor } from './components/editor/editor';
+### 2. Search Workbench
+- Type search queries with IntelliSense
+- Hover over keywords for documentation
+- See real-time validation errors
+- Execute queries and view results
 
-function MyComponent() {
-  const handleRun = () => {
-    console.log('Code executed!');
-  };
+## 🛠️ Technologies
 
-  return (
-    <Editor
-      language="javascript"
-      value="console.log('Hello, World!');"
-      theme="vs-dark"
-      onRun={handleRun}
-      fontSize={16}
-      height="400px"
-    />
-  );
-}
-```
+- **React 18** + **TypeScript** + **Vite**
+- **Monaco Editor** (VSCode's editor)
+- **SCSS** for styling
+- **jsonc-parser** for JSON parsing
 
-## 🎨 Custom Languages
+## 📊 Stats
 
-The app includes custom language support for:
+- **55 Configuration Controls**
+- **9 Supported Languages**
+- **69 Documentation Files**
+- **6 Organized Sections**
+- **~30% Feature Parity** with VSCode-Couchbase (growing)
 
-### N1QL
-Couchbase N1QL (SQL for JSON) with keywords like SELECT, FROM, WHERE, UNNEST, etc.
+## 🎯 Use Cases
 
-### SQL++
-Enhanced SQL with additional features for JSON data manipulation.
+1. **Testing Monaco Editor** - Try all configuration options
+2. **Learning Search Queries** - Interactive documentation
+3. **Prototyping** - Quickly test editor integrations
+4. **Demo Tool** - Show editor capabilities to stakeholders
 
-### CustomJava
-Java with custom configurations.
+## 📝 License
 
-## 🐛 Troubleshooting
+Demonstration and testing purposes.
 
-If you encounter any issues:
+---
 
-1. **Port already in use**: Vite will automatically try the next available port
-2. **Dependencies not installed**: Run `npm install` again
-3. **Build errors**: Try deleting `node_modules` and running `npm install` again
-4. **Editor not loading**: Check browser console for errors
-
-## 📄 License
-
-This is a test application for demonstration purposes.
-
-## 🤝 Contributing
-
-This is a test app. Feel free to modify and extend it as needed.
-
-## 📧 Support
-
-For issues with the Monaco Editor component itself, refer to the original implementation in the VSCode-Couchbase project.
-
+**Ready for your demo!** 🎉
+See **DEMO_GUIDE.md** for a complete walkthrough.

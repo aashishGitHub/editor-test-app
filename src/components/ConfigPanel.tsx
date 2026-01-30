@@ -6,7 +6,9 @@ import { EditingControls } from './controls/EditingControls';
 import { SuggestionsControls } from './controls/SuggestionsControls';
 import { AdvancedControls } from './controls/AdvancedControls';
 import { LayoutControls } from './controls/LayoutControls';
+import { PlaceholderControls } from './controls/PlaceholderControls';
 import type { ConfigSection } from '../types/editorConfig';
+import type { PlaceholderPreset } from '../hooks/useEditorConfig';
 
 interface ConfigPanelProps {
   state: {
@@ -53,14 +55,19 @@ interface ConfigPanelProps {
     showFoldingControls: 'always' | 'never' | 'mouseover';
     scrollbarSize: number;
     overviewRulerLanes: number;
+    // Placeholder state
+    placeholderEnabled: boolean;
+    placeholderPreset: PlaceholderPreset;
+    placeholderCustomText: string;
   };
   setters: any;
   onLanguageChange: (lang: SupportedLanguage) => void;
   onResetDefaults: () => void;
   onCopyConfig: () => void;
+  onClearEditorContent: () => void;
 }
 
-export const ConfigPanel = ({ state, setters, onLanguageChange, onResetDefaults, onCopyConfig }: ConfigPanelProps) => {
+export const ConfigPanel = ({ state, setters, onLanguageChange, onResetDefaults, onCopyConfig, onClearEditorContent }: ConfigPanelProps) => {
   const [activeSection, setActiveSection] = useState<ConfigSection>('basic');
 
   return (
@@ -114,6 +121,12 @@ export const ConfigPanel = ({ state, setters, onLanguageChange, onResetDefaults,
             onClick={() => setActiveSection('layout')}
           >
             📐 Layout
+          </button>
+          <button 
+            className={`tab-btn ${activeSection === 'placeholder' ? 'active' : ''}`}
+            onClick={() => setActiveSection('placeholder')}
+          >
+            📝 Placeholder
           </button>
         </div>
       </div>
@@ -234,10 +247,24 @@ export const ConfigPanel = ({ state, setters, onLanguageChange, onResetDefaults,
             onOverviewRulerLanesChange={setters.setOverviewRulerLanes}
           />
         )}
+
+        {activeSection === 'placeholder' && (
+          <PlaceholderControls
+            placeholderEnabled={state.placeholderEnabled}
+            placeholderPreset={state.placeholderPreset}
+            placeholderCustomText={state.placeholderCustomText}
+            onPlaceholderEnabledChange={setters.setPlaceholderEnabled}
+            onPlaceholderPresetChange={setters.setPlaceholderPreset}
+            onPlaceholderCustomTextChange={setters.setPlaceholderCustomText}
+            onClearEditorContent={onClearEditorContent}
+          />
+        )}
       </div>
     </>
   );
 };
+
+
 
 
 

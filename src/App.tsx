@@ -3,7 +3,7 @@ import { ConfigPanel } from './components/ConfigPanel';
 import { EditorSection } from './components/EditorSection';
 import { EventsPanel, LogsPanel, OutputPanel } from './components/ActivityPanels';
 import { FeaturesSection } from './components/FeaturesSection';
-import { SearchWorkbenchSection } from "./components/SearchWorkbenchSection";
+import { SearchWorkbenchSection } from "./components/SearchWorkbench";
 import "./App.css";
 
 function App() {
@@ -22,6 +22,7 @@ function App() {
         onLanguageChange={handlers.handleLanguageChange}
         onResetDefaults={handlers.resetToDefaults}
         onCopyConfig={handlers.copyConfig}
+        onClearEditorContent={() => handlers.handleEditorChange('')}
       />
 
       <EditorSection
@@ -70,6 +71,9 @@ function App() {
         showFoldingControls={state.showFoldingControls}
         scrollbarSize={state.scrollbarSize}
         overviewRulerLanes={state.overviewRulerLanes}
+        placeholderEnabled={state.placeholderEnabled}
+        placeholderPreset={state.placeholderPreset}
+        placeholderCustomText={state.placeholderCustomText}
         onRun={handlers.handleRun}
         onChange={handlers.handleEditorChange}
         onDidPaste={handlers.handlePaste}

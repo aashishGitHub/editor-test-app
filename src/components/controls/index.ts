@@ -4,4 +4,5 @@ export { EditingControls } from './EditingControls';
 export { SuggestionsControls } from './SuggestionsControls';
 export { AdvancedControls } from './AdvancedControls';
 export { LayoutControls } from './LayoutControls';
+export { PlaceholderControls } from './PlaceholderControls';
 

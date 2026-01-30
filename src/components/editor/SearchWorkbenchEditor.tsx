@@ -55,7 +55,7 @@ export function SearchWorkbenchEditor({
         onChange={onChange}
         height={height}
         options={{
-          wordWrap: 'on',
+          wordWrap: "off",
           minimap: { enabled: false },
         }}
         onMount={onEditorMount}

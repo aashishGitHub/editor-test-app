@@ -10,4 +10,3 @@ const CUSTOM_LANGUAGES: CustomLanguage[] = ['N1QL', 'SqlPlusPlus', 'CustomJava']
 Object.values(CUSTOM_LANGUAGES).forEach((language) => {
   generateLanguage(language);
 });
-

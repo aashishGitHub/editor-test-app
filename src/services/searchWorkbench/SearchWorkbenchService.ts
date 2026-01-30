@@ -3,24 +3,39 @@ import { editor } from 'monaco-editor';
 import { ISearchQueryContext, SearchQueryResult, QueryStatusProps } from './types/QueryContext';
 import { executeMockSearchQuery } from './MockSearchAPI';
 import { ValidationService } from './validation/ValidationService';
+import { EditorValidationService } from './validation/EditorValidationService';
 import { AutoCompleteService } from './autoComplete/AutoCompleteService';
 import { SearchWorkbenchConfigService } from "./config/SearchWorkbenchConfigService";
 import type { SearchWorkbenchConfig } from "./types/Config";
 import { SearchQueryHoverProvider } from "./documentation/HoverProvider";
+import {
+  QUERY_TEMPLATES,
+  getTemplateById,
+  getTemplatesByCategory,
+  getTemplateCategories,
+  getTemplateAsString,
+  getGroupedTemplates,
+  type QueryTemplate,
+  type TemplateCategory,
+} from "./templates";
 
 export class SearchWorkbenchService {
   private editorToContext: Map<string, ISearchQueryContext>;
   private validationService: ValidationService;
+  private editorValidationService: EditorValidationService;
   private autoCompleteService: AutoCompleteService;
   private configService: SearchWorkbenchConfigService;
   private autocompleteDisposable: { dispose: () => void } | null = null;
   private hoverDisposable: { dispose: () => void } | null = null;
+  private validationDisposable: { dispose: () => void } | null = null;
   private hoverProvider: SearchQueryHoverProvider;
+  private validationDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(config?: Partial<SearchWorkbenchConfig>) {
     this.editorToContext = new Map();
     this.configService = new SearchWorkbenchConfigService(config);
     this.validationService = new ValidationService(this.configService);
+    this.editorValidationService = new EditorValidationService(this.configService);
     this.autoCompleteService = new AutoCompleteService(this.configService);
     this.hoverProvider = new SearchQueryHoverProvider(this.configService);
   }
@@ -57,6 +72,12 @@ export class SearchWorkbenchService {
       this.hoverDisposable = null;
     }
 
+    // Dispose existing validation listener if configuration changed
+    if (this.validationDisposable) {
+      this.validationDisposable.dispose();
+      this.validationDisposable = null;
+    }
+
     // Services will check config on next use
     // This allows lazy initialization based on feature flags
   }
@@ -78,6 +99,48 @@ export class SearchWorkbenchService {
   }
 
   /**
+   * Get all available query templates
+   */
+  getQueryTemplates(): QueryTemplate[] {
+    return QUERY_TEMPLATES;
+  }
+
+  /**
+   * Get template by ID
+   */
+  getQueryTemplateById(id: string): QueryTemplate | undefined {
+    return getTemplateById(id);
+  }
+
+  /**
+   * Get templates by category
+   */
+  getQueryTemplatesByCategory(category: TemplateCategory): QueryTemplate[] {
+    return getTemplatesByCategory(category);
+  }
+
+  /**
+   * Get all template categories
+   */
+  getQueryTemplateCategories(): { id: TemplateCategory; label: string }[] {
+    return getTemplateCategories();
+  }
+
+  /**
+   * Get template as formatted JSON string
+   */
+  getQueryTemplateAsString(id: string): string {
+    return getTemplateAsString(id);
+  }
+
+  /**
+   * Get templates grouped by category
+   */
+  getGroupedQueryTemplates(): Map<TemplateCategory, QueryTemplate[]> {
+    return getGroupedTemplates();
+  }
+
+  /**
    * Set query context for an editor
    */
   setQueryContext(uri: string, context: ISearchQueryContext): void {
@@ -93,7 +156,7 @@ export class SearchWorkbenchService {
   }
 
   /**
-   * Register Monaco editor and set up autocomplete
+   * Register Monaco editor and set up autocomplete, hover, and validation
    */
   registerEditor(editorInstance: editor.IStandaloneCodeEditor): void {
     const model = editorInstance.getModel();
@@ -102,9 +165,12 @@ export class SearchWorkbenchService {
       return;
     }
 
-    // Dispose existing autocomplete if any
+    // Dispose existing providers if any
     if (this.autocompleteDisposable) {
       this.autocompleteDisposable.dispose();
+    }
+    if (this.validationDisposable) {
+      this.validationDisposable.dispose();
     }
 
     // Only register autocomplete if enabled
@@ -137,6 +203,42 @@ export class SearchWorkbenchService {
         "json",
         this.hoverProvider
       );
+    }
+
+    // Register real-time validation on content change
+    if (this.configService.isBasicValidationEnabled()) {
+      const debounceMs = this.configService.getConfig().advanced.validation.debounceMs ?? 300;
+      
+      // Run initial validation
+      this.editorValidationService.validateAndSetMarkers(
+        editorInstance,
+        model.getValue()
+      );
+
+      // Set up content change listener with debounce
+      const contentChangeDisposable = model.onDidChangeContent(() => {
+        // Clear existing timer
+        if (this.validationDebounceTimer) {
+          clearTimeout(this.validationDebounceTimer);
+        }
+
+        // Debounce validation to avoid excessive calls while typing
+        this.validationDebounceTimer = setTimeout(() => {
+          this.editorValidationService.validateAndSetMarkers(
+            editorInstance,
+            model.getValue()
+          );
+        }, debounceMs);
+      });
+
+      this.validationDisposable = {
+        dispose: () => {
+          contentChangeDisposable.dispose();
+          if (this.validationDebounceTimer) {
+            clearTimeout(this.validationDebounceTimer);
+          }
+        }
+      };
     }
   }
 
@@ -230,10 +332,20 @@ export class SearchWorkbenchService {
       this.hoverDisposable.dispose();
       this.hoverDisposable = null;
     }
+    if (this.validationDisposable) {
+      this.validationDisposable.dispose();
+      this.validationDisposable = null;
+    }
+    if (this.validationDebounceTimer) {
+      clearTimeout(this.validationDebounceTimer);
+      this.validationDebounceTimer = null;
+    }
     this.editorToContext.clear();
   }
 }
 
 // Export types for convenience
 export type { ISearchQueryContext, SearchQueryResult, QueryStatusProps } from './types/QueryContext';
+export type { QueryTemplate, TemplateCategory } from './templates';
+export { QUERY_TEMPLATES, getTemplateById, getTemplateAsString } from './templates';
 

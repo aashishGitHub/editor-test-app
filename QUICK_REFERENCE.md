@@ -1,187 +1,131 @@
-# 🚀 Quick Reference Card
+# Quick Reference Card
 
-## ❓ WHERE IS THE RUN BUTTON?
+## 🚀 Getting Started
 
-### The run button (▶️) is INSIDE the editor, at the top-right corner!
-
+```bash
+npm install && npm run dev
 ```
-┌─────────────────────────────────────┐
-│ Editor Preview                      │
-├─────────────────────────────────────┤
-│ ┌─────────────────────────────────┐ │
-│ │                        [▶️] ← HERE!│
-│ │ 1  function hello() {           │ │
-│ │ 2    console.log("Hi");         │ │
-│ │ 3  }                            │ │
-│ └─────────────────────────────────┘ │
-└─────────────────────────────────────┘
-```
-
-**To see it:**
-1. ✅ Check "Show Run Button ▶️" in **Editor Behavior**
-2. 👀 Look at top-right corner **INSIDE** the editor box
-3. 🎯 It's a circular purple/green play button
+Open: **http://localhost:5173**
 
 ---
 
-## 🎛️ NEW DROPDOWN CONTROLS
+## 🎯 Monaco Editor Playground
 
-Located in the **Display Options** section (below checkboxes):
+### 6 Configuration Sections
 
-### 1. Word Wrap
-```
-[▼ On                    ]
-```
-- **Off** - Horizontal scroll
-- **On** - Wrap at viewport ✓ Recommended
-- **Word Wrap Column** - Wrap at column
-- **Bounded** - Mixed mode
+| Tab | What It Controls | Key Options |
+|-----|------------------|-------------|
+| **🎯 Basic** | Core settings | Languages, themes, font size, read-only |
+| **🎨 Display** | Visual appearance | Cursor style, line numbers, whitespace |
+| **✏️ Editing** | Edit behavior | Indentation, auto-closing, formatting |
+| **💡 Suggestions** | IntelliSense | Autocomplete, tab completion |
+| **🔧 Advanced** | Power features | Bracket colors, indent guides |
+| **📐 Layout** | UI layout | Scrollbars, minimap, folding |
 
-### 2. Cursor Style
-```
-[▼ Line                  ]
-```
-- **Line** - | (standard)
-- **Block** - █ (filled box)
-- **Underline** - _ (underline)
-- **Line Thin** - thinner |
-- **Block Outline** - hollow □
-- **Underline Thin** - thinner _
+### Quick Actions
 
-### 3. Line Numbers
-```
-[▼ On (Absolute)         ]
-```
-- **On** - 1, 2, 3, 4...
-- **Relative** - Distance from cursor
-- **Off** - No numbers
-
-### 4. Render Whitespace
-```
-[▼ None                  ]
-```
-- **None** - Hidden
-- **Boundary** - At edges
-- **Selection** - In selected text
-- **All** - Show all (· for space, → for tab)
+- **📋 Copy Config** - Export configuration as JSON
+- **🔄 Reset All** - Restore default settings
 
 ---
 
-## 🆕 NEW CHECKBOXES
+## 🔍 Search Workbench
 
-In **Editor Behavior** section:
+### Key Features
 
-### Show Minimap
-- ☐ Off = No minimap
-- ☑ On = Code overview on right side
+| Feature | How to Use | What It Does |
+|---------|------------|--------------|
+| **Hover Docs** | Hover over any keyword | Shows documentation |
+| **Autocomplete** | Type `"` inside JSON object | Suggests keywords |
+| **Validation** | Type JSON query | Real-time error checking |
+| **Run Query** | Click "Run Query" button | Executes search (mock) |
 
-### Scroll Beyond Last Line
-- ☐ Off = Stop at last line
-- ☑ On = Can scroll past end
+### Sample Query
+
+```json
+{
+  "query": {
+    "match": "search text"
+  },
+  "fields": ["*"],
+  "size": 10
+}
+```
+
+**Try hovering over**: `query`, `match`, `fields`, `size`
 
 ---
 
-## 🧪 Quick Tests (30 seconds each)
+## 🧪 Quick Tests
 
-### Test 1: Find the Run Button
-```bash
-1. Check "Show Run Button ▶️" checkbox
-2. Look TOP-RIGHT inside editor (not page)
-3. Click the play button ▶️
-4. See output appear below!
-```
+### Test 1: Transform Editor (30s)
+1. **Display** tab → Cursor Style = "Block"
+2. **Display** tab → Line Numbers = "Relative"
+3. See editor transform!
 
-### Test 2: Try All Cursor Styles
-```bash
-1. Open "Cursor Style" dropdown
-2. Select "Block"
-3. Click in editor - see block cursor █
-4. Try "Underline" - see _ cursor
-5. Back to "Line" - see | cursor
-```
+### Test 2: Hover Documentation (30s)
+1. Go to Search Workbench
+2. Hover over `"query"` in JSON
+3. See documentation tooltip
 
-### Test 3: Relative Line Numbers
-```bash
-1. Open "Line Numbers" dropdown
-2. Select "Relative"
-3. Click on line 5 in editor
-4. See: 2, 1, 0 ←cursor, 1, 2
-5. Move cursor - numbers change!
-```
+### Test 3: Autocomplete (30s)
+1. In Search Workbench, type `{` then `"`
+2. See keyword suggestions
+3. Select one and press Enter
 
-### Test 4: Show All Whitespace
-```bash
-1. Type: "hello    world" (spaces)
-2. Open "Render Whitespace"
-3. Select "All"
-4. See: "hello····world" (dots!)
-5. Press Tab - see → (arrow!)
-```
-
-### Test 5: Enable Minimap
-```bash
-1. Check "Show Minimap"
-2. See code overview on right
-3. Scroll with minimap
-4. Click minimap to jump
-```
+### Test 4: Export Config (15s)
+1. Adjust some settings
+2. Click "📋 Copy Config"
+3. Paste to see JSON
 
 ---
 
-## 📊 Controls Summary
+## 📖 Documentation Links
 
-| Control | Type | Count | Location |
-|---------|------|-------|----------|
-| Languages | Buttons | 9 | Language Selection |
-| Themes | Buttons | 2 | Theme |
-| Font Size | Slider | 1 | Font Size |
-| Line Height | Slider | 1 | Line Height |
-| Editor Height | Slider | 1 | Editor Height |
-| Checkboxes | Toggle | 5 | Editor Behavior |
-| **Dropdowns** | **Select** | **4** | **Display Options** ⭐ |
-
-**Total: 24 interactive controls!**
-
----
-
-## 🎯 Most Important
-
-### 1. RUN BUTTON LOCATION ▶️
-**Top-right corner INSIDE the editor component**
-(Enable with "Show Run Button ▶️" checkbox)
-
-### 2. DROPDOWNS LOCATION 🎛️
-**In "Display Options" section**
-(Below the checkboxes)
-
-### 3. NEW FEATURES ⭐
-- 4 dropdowns with multiple options
-- Minimap toggle
-- Scroll beyond last line toggle
-- Better organized UI
+| For... | See... |
+|--------|--------|
+| **Demo presentation** | `DEMO_GUIDE.md` |
+| **Getting started** | `QUICKSTART.md` or `START_HERE.md` |
+| **All 55 options** | `STORYBOOK_GUIDE.md` |
+| **Feature roadmap** | `FEATURE_COMPARISON.md` |
+| **Full details** | `README.md` |
 
 ---
 
 ## 💡 Pro Tips
 
-1. **Try combinations**: Block cursor + relative numbers + show whitespace
-2. **Long text test**: Type long line, toggle word wrap on/off
-3. **Minimap magic**: Great for navigating large files
-4. **Whitespace debug**: Use "All" to see invisible characters
-5. **Run button**: Visible only when checkbox is checked!
+✅ Use tabs to keep settings organized  
+✅ Hover over any Search Workbench keyword for help  
+✅ Type `"` for autocomplete suggestions  
+✅ Export config to share with teammates  
+✅ Reset anytime if you get lost
 
 ---
 
-## 📖 More Info
+## 🐛 Troubleshooting
 
-- **Full UI Guide**: See `UI_GUIDE.md`
-- **Feature Testing**: See `FEATURE_TESTING_GUIDE.md`
-- **What's New**: See `WHATS_NEW.md`
-- **Main Docs**: See `README.md`
+**Editor not loading?**  
+→ Refresh page (Ctrl+R)
+
+**Hover not working?**  
+→ Hover over the **key name** (in quotes), wait 500ms
+
+**Autocomplete not showing?**  
+→ Type `"` (quote) inside a JSON object
+
+**Run button?**  
+→ It's **inside the editor** at top-right (enable in Basic tab)
 
 ---
 
-**App is running at: http://localhost:5173** 🚀
+## 📊 Stats
 
-**Quick start:** `npm run dev`
+- **55** configuration controls
+- **9** programming languages
+- **69** documentation files
+- **6** organized sections
+- **~30%** feature parity with VSCode extension
 
+---
+
+**Quick start**: `npm run dev` → Open browser → Explore! 🎉
