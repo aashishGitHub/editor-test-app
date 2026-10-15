@@ -21,14 +21,10 @@ div.editor-wrapper > div.monaco-editor > div.overflow-guard {
   font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
   line-height: 1.6;
   padding: 4px 0;
-}
-
-/* Dark theme placeholder adjustments */
+}/* Dark theme placeholder adjustments */
 .vs-dark .monaco-placeholder {
   color: #9ca3af;
-}
-
-/* Light theme placeholder adjustments */
+}/* Light theme placeholder adjustments */
 .vs-light .monaco-placeholder,
 .vs .monaco-placeholder {
   color: #6b7280;
