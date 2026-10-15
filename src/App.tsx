@@ -1,13 +1,13 @@
-import { useEditorConfig } from './hooks/useEditorConfig';
-import { ConfigPanel } from './components/ConfigPanel';
-import { EditorSection } from './components/EditorSection';
-import { EventsPanel, LogsPanel, OutputPanel } from './components/ActivityPanels';
-import { FeaturesSection } from './components/FeaturesSection';
+// import { useEditorConfig } from './hooks/useEditorConfig';
+// import { ConfigPanel } from './components/ConfigPanel';
+// import { EditorSection } from './components/EditorSection';
+// import { EventsPanel, LogsPanel, OutputPanel } from './components/ActivityPanels';
+// import { FeaturesSection } from './components/FeaturesSection';
 import { SearchWorkbenchSection } from "./components/SearchWorkbench";
 import "./App.css";
 
 function App() {
-  const { state, setters, handlers } = useEditorConfig();
+  // const { state, setters, handlers } = useEditorConfig();
 
   return (
     <div className="app">
@@ -16,7 +16,7 @@ function App() {
         <p>Test all features of the Monaco Editor component</p>
       </header>
 
-      <ConfigPanel
+      {/* <ConfigPanel
         state={state}
         setters={setters}
         onLanguageChange={handlers.handleLanguageChange}
@@ -88,7 +88,7 @@ function App() {
 
       <OutputPanel output={state.output} onClear={handlers.clearOutput} />
 
-      <FeaturesSection />
+      <FeaturesSection /> */}
 
       <SearchWorkbenchSection />
     </div>
